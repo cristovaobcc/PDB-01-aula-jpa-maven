@@ -24,6 +24,8 @@ public class Programa {
 		em.persist(p3);
 		
 		em.getTransaction().commit();
+		em.close();
+		emf.close();
 		
 		System.out.println("Pronto!");
 		
