@@ -19,13 +19,42 @@ public class Programa {
 
 		//criaInstanciasNoDB(emf, em, p1, p2, p3);
 		
-		buscaPessoa(emf, em);
+		p1 = buscaPessoa(emf, em, 1);
+		p2 = buscaPessoa(emf, em, 2);
+		p3 = buscaPessoa(emf, em, 3);
+		
+		if (removePessoa(emf, em, p1)) {
+			System.out.printf("Pessoa removida : %s", p1);
+		}
 		
 		em.close();
 		emf.close();
 
 		System.out.println("Pronto!");
 
+	}
+	
+	private static boolean removePessoa(EntityManagerFactory emf, EntityManager em, Pessoa p) {
+		
+		boolean removed = false;
+		try {
+			
+			em.remove(p);
+			removed = true;
+			
+		} catch (Exception e) {
+			System.err.println(e.getMessage());
+			
+		} 
+
+		return removed;		
+	}
+	
+	
+	private static Pessoa buscaPessoa(EntityManagerFactory emf, EntityManager em, int id) {
+		Pessoa p = em.find(Pessoa.class, id);
+		
+		return p;
 	}
 
 	private static void criaInstanciasNoDB(EntityManagerFactory emf, EntityManager em, Pessoa... pessoas) {
@@ -39,9 +68,5 @@ public class Programa {
 		em.getTransaction().commit();
 	}
 	
-	private static void buscaPessoa(EntityManagerFactory emf, EntityManager em) {
-		Pessoa p = em.find(Pessoa.class, 2);
-		
-		System.out.println(p);
-	}
+	
 }
