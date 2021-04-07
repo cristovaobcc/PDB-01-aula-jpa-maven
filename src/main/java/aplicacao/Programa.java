@@ -38,8 +38,11 @@ public class Programa {
 		
 		boolean removed = false;
 		try {
-			
+			// Entidade no contexto de transação.
+			em.getTransaction().begin();
 			em.remove(p);
+			em.getTransaction().commit();
+			
 			removed = true;
 			
 		} catch (Exception e) {
